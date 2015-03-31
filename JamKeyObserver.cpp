@@ -5,7 +5,7 @@
 
 namespace Keyboard
 {
-	JamKeyObserver::JamKeyObserver(const std::vector<int>& keyCombArg) : 
+	JamKeyObserver::JamKeyObserver(const std::vector<int>& keyCombArg) :
 		keyComb(keyCombArg)
 	{
 	}
@@ -13,7 +13,7 @@ namespace Keyboard
 	void JamKeyObserver::update(const KeyInformation& ki)
 	{
 		KBDLLHOOKSTRUCT hooked = ki.hooked;
-        DWORD vk_key = hooked.vkCode;
+		DWORD vk_key = hooked.vkCode;
 
 		for(KeyCombination::iterator iter1 = keyComb.begin();
 			iter1 != keyComb.end();
@@ -37,11 +37,11 @@ namespace Keyboard
 			}
 		}
 		/*
-        char ascii_key = (char)MapVirtualKey(hooked.vkCode, 2);
-        bool caps_locked = (((unsigned short)GetKeyState(0x14)) & 0xffff) != 0;
-        bool maj = KEY_UP(VK_SHIFT) ^ caps_locked;
+		char ascii_key = (char)MapVirtualKey(hooked.vkCode, 2);
+		bool caps_locked = (((unsigned short)GetKeyState(0x14)) & 0xffff) != 0;
+		bool maj = KEY_UP(VK_SHIFT) ^ caps_locked;
 
-		
+
 		DWORD dwMsg = 1;
 		dwMsg += hooked.scanCode << 16;
 		dwMsg += hooked.flags << 24;
@@ -57,7 +57,7 @@ namespace Keyboard
 		HKL hKL = GetKeyboardLayout(dwThreadID);
 		BYTE *kState = (BYTE*)malloc(256);
 		GetKeyboardState(kState);
-		
+
 		UINT nScanCode = MapVirtualKeyEx(nChar, 2, hKL);
 		WORD wScanKey = LOWORD(nScanCode);
 

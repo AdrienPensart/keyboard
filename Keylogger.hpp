@@ -9,32 +9,32 @@
 
 namespace Keyboard
 {
-    typedef __declspec(dllexport) LRESULT (CALLBACK *HookProc) ( int nCode,  WPARAM wParam,  LPARAM lParam);
+	typedef __declspec(dllexport) LRESULT (CALLBACK *HookProc) ( int nCode,  WPARAM wParam,  LPARAM lParam);
 
-	class Keylogger : 
-		public Common::Singleton<Keylogger>, 
-		public Common::Observable<KeyObserver, KeyInformation>, 
+	class Keylogger :
+		public Common::Singleton<Keylogger>,
+		public Common::Observable<KeyObserver, KeyInformation>,
 		public System::Thread
-    {
-        friend class Common::Singleton<Keylogger>;
+	{
+		friend class Common::Singleton<Keylogger>;
 
-        protected:
-            Keylogger();
-            ~Keylogger();
+		protected:
+			Keylogger();
+			~Keylogger();
 
-        public:
+		public:
 			virtual void start();
-            virtual void stop();
-            HHOOK getHook();
+			virtual void stop();
+			HHOOK getHook();
 			void blockNextKey();
 			void unblockNextKey();
 			bool isNextKeyBlocked();
 
-        private:
-            HHOOK hook;
-            bool isActivated;
+		private:
+			HHOOK hook;
+			bool isActivated;
 			bool blockNextKeyFlag;
-            static DWORD WINAPI MsgLoop(LPVOID lpParameter);
-    };
+			static DWORD WINAPI MsgLoop(LPVOID lpParameter);
+	};
 
 } // Keyboard

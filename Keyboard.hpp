@@ -78,13 +78,13 @@ namespace Keyboard
 	WORD ModificationNumber; \
 	WCHAR wch[n]; \
 	} LIGATURE##n, *KBD_LONG_POINTER PLIGATURE##n;
- 
+
 	TYPEDEF_LIGATURE(1)
 	TYPEDEF_LIGATURE(2)
 	TYPEDEF_LIGATURE(3)
 	TYPEDEF_LIGATURE(4)
 	TYPEDEF_LIGATURE(5)
- 
+
 	typedef struct {
 		BYTE vsc;
 		WCHAR *KBD_LONG_POINTER pwsz;
@@ -110,12 +110,12 @@ namespace Keyboard
 		DWORD dwType;
 		DWORD dwSubType;
 	} KBDTABLES, *KBD_LONG_POINTER PKBDTABLES;
- 
+
 	typedef struct _VK_FUNCTION_PARAM {
 		BYTE NLSFEProcIndex;
 		ULONG NLSFEProcParam;
 	} VK_FPARAM, *KBD_LONG_POINTER PVK_FPARAM;
- 
+
 	typedef struct _VK_TO_FUNCTION_TABLE {
 		BYTE Vk;
 		BYTE NLSFEProcType;
@@ -124,7 +124,7 @@ namespace Keyboard
 		VK_FPARAM NLSFEProc[8];
 		VK_FPARAM NLSFEProcAlt[8];
 	} VK_F, *KBD_LONG_POINTER PVK_F;
- 
+
 	typedef struct tagKbdNlsLayer {
 		USHORT OEMIdentifier;
 		USHORT LayoutInformation;

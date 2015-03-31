@@ -3,11 +3,11 @@
 #include <cstdio>
 
 // Extended macros
- 
+
 #define INIT_PVK_TO_WCHARS(i, n) \
 if((pKbd->pVkToWcharTable[i].cbSize - 2) / 2 == n) \
 pVkToWchars##n = (PVK_TO_WCHARS##n)pKbd->pVkToWcharTable[i].pVkToWchars; \
- 
+
 #define SEARCH_VK_IN_CONVERSION_TABLE(n) \
 i = 0; \
 if(pVkToWchars##n && (mod < n)) \
