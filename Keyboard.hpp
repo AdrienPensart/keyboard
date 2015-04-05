@@ -3,25 +3,24 @@
 #include <common/WindowsWrapper.hpp>
 #include <climits>
 
-namespace Keyboard
-{
+namespace Keyboard {
 	HINSTANCE loadKeyboardLayout();
 	int unloadKeyboardLayout(HINSTANCE kbdLibrary);
 	int getKeyboardLayoutFile(char* layoutFile, DWORD bufferSize);
 	int convertVirtualKeyToWChar(int virtualKey, PWCHAR out, PWCHAR buffer);
 
-	#define KBD_LONG_POINTER64 __ptr64
-	#define BUILD_WOW6432
+#define KBD_LONG_POINTER64 __ptr64
+#define BUILD_WOW6432
 
-	#if defined(BUILD_WOW6432)
-	#define KBD_LONG_POINTER __ptr64
-	#else
-	#define KBD_LONG_POINTER
-	#endif
+#if defined(BUILD_WOW6432)
+#define KBD_LONG_POINTER __ptr64
+#else
+#define KBD_LONG_POINTER
+#endif
 
-	#define CAPLOK 0x01
-	#define WCH_NONE 0xF000
-	#define WCH_DEAD 0xF001
+#define CAPLOK 0x01
+#define WCH_NONE 0xF000
+#define WCH_DEAD 0xF001
 
 	typedef struct {
 		BYTE Vk;
@@ -44,7 +43,7 @@ namespace Keyboard
 		BYTE Vsc;
 	} VK_VSC, *KBD_LONG_POINTER PVK_VSC;
 
-	#define TYPEDEF_VK_TO_WCHARS(n) typedef struct _VK_TO_WCHARS##n { \
+#define TYPEDEF_VK_TO_WCHARS(n) typedef struct _VK_TO_WCHARS##n { \
 	BYTE VirtualKey; \
 	BYTE Attributes; \
 	WCHAR wch[n]; \
@@ -73,7 +72,7 @@ namespace Keyboard
 		USHORT uFlags;
 	} DEADKEY, *KBD_LONG_POINTER PDEADKEY;
 
-	#define TYPEDEF_LIGATURE(n) typedef struct _LIGATURE##n { \
+#define TYPEDEF_LIGATURE(n) typedef struct _LIGATURE##n { \
 	BYTE VirtualKey; \
 	WORD ModificationNumber; \
 	WCHAR wch[n]; \

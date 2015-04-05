@@ -3,31 +3,24 @@
 
 #include <log/Log.hpp>
 
-namespace Keyboard
-{
+namespace Keyboard {
 	JamKeyObserver::JamKeyObserver(const std::vector<int>& keyCombArg) :
-		keyComb(keyCombArg)
-	{
+		keyComb(keyCombArg) {
 	}
 
-	void JamKeyObserver::update(const KeyInformation& ki)
-	{
+	void JamKeyObserver::update(const KeyInformation& ki) {
 		KBDLLHOOKSTRUCT hooked = ki.hooked;
 		DWORD vk_key = hooked.vkCode;
 
 		for(KeyCombination::iterator iter1 = keyComb.begin();
-			iter1 != keyComb.end();
-			iter1++)
-		{
-			if(vk_key == *iter1)
-			{
+		        iter1 != keyComb.end();
+		        iter1++) {
+			if(vk_key == *iter1) {
 				LOG << "One key of combination found";
 				for(KeyCombination::iterator iter2 = keyComb.begin();
-					iter2 != keyComb.end();
-					iter2++)
-				{
-					if(KEY_UP(*iter2))
-					{
+				        iter2 != keyComb.end();
+				        iter2++) {
+					if(KEY_UP(*iter2)) {
 						return;
 					}
 				}

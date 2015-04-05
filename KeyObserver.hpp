@@ -5,10 +5,8 @@
 #include <string>
 #include <fstream>
 
-namespace Keyboard
-{
-	typedef struct
-	{
+namespace Keyboard {
+	typedef struct {
 		DWORD vkCode;
 		DWORD scanCode;
 		DWORD flags;
@@ -16,24 +14,20 @@ namespace Keyboard
 		unsigned long * dwExtraInfo;
 	} KBDLLHOOKSTRUCT, *PKBDLLHOOKSTRUCT;
 
-	#define KEY_UP(vk_code) ((GetAsyncKeyState(vk_code) & 0x8000) ? 1 : 0)
-	#define KEY_DOWN(vk_code) ((GetAsyncKeyState(vk_code) & 0x8000) ? 0 : 1)
+#define KEY_UP(vk_code) ((GetAsyncKeyState(vk_code) & 0x8000) ? 1 : 0)
+#define KEY_DOWN(vk_code) ((GetAsyncKeyState(vk_code) & 0x8000) ? 0 : 1)
 
-	class KeyInformation
-	{
+	class KeyInformation {
 		public:
 			KBDLLHOOKSTRUCT hooked;
 	};
 
-	class KeyObserver
-	{
+	class KeyObserver {
 		public:
-			KeyObserver()
-			{
+			KeyObserver() {
 			}
 
-			virtual ~KeyObserver()
-			{
+			virtual ~KeyObserver() {
 			}
 
 			virtual void update(const KeyInformation& ki)=0;

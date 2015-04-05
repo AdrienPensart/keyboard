@@ -33,8 +33,7 @@ i++; \
 while(pVkToWchars##n[i].VirtualKey != 0); \
 } \
 
-namespace Keyboard
-{
+namespace Keyboard {
 	typedef PKBDTABLES(CALLBACK* KbdLayerDescriptor)(VOID);
 
 	PVK_TO_WCHARS1 pVkToWchars1 = NULL;
@@ -50,15 +49,14 @@ namespace Keyboard
 	PMODIFIERS pCharModifiers;
 	PDEADKEY pDeadKey;
 
-	HINSTANCE loadKeyboardLayout()
-	{
+	HINSTANCE loadKeyboardLayout() {
 		PKBDTABLES pKbd;
 		HINSTANCE kbdLibrary;
 		KbdLayerDescriptor pKbdLayerDescriptor = NULL;
 
 		char layoutFile[MAX_PATH];
 		if(getKeyboardLayoutFile(layoutFile, sizeof(layoutFile)) == -1)
-		return NULL;
+			return NULL;
 
 		char systemDirectory[MAX_PATH];
 		GetSystemDirectory(systemDirectory, MAX_PATH);
@@ -76,8 +74,7 @@ namespace Keyboard
 			return NULL;
 
 		int i = 0;
-		do
-		{
+		do {
 			if((pKbd->pVkToWcharTable[i].cbSize - 2) / 2 == 1)
 				pVkToWchars1 = (PVK_TO_WCHARS1)pKbd->pVkToWcharTable[i].pVkToWchars;
 			if((pKbd->pVkToWcharTable[i].cbSize - 2) / 2 == 2)
@@ -111,8 +108,7 @@ namespace Keyboard
 			INIT_PVK_TO_WCHARS(i, 10)
 			*/
 			i++;
-		}
-		while(pKbd->pVkToWcharTable[i].cbSize != 0);
+		} while(pKbd->pVkToWcharTable[i].cbSize != 0);
 
 		pCharModifiers = pKbd->pCharModifiers;
 		pDeadKey = pKbd->pDeadKey;
@@ -120,16 +116,14 @@ namespace Keyboard
 		return kbdLibrary;
 	}
 
-	int unloadKeyboardLayout(HINSTANCE kbdLibrary)
-	{
+	int unloadKeyboardLayout(HINSTANCE kbdLibrary) {
 		if(kbdLibrary != 0)
 			return (FreeLibrary(kbdLibrary) != 0);
 		else
 			return 0;
 	}
 
-	int convertVirtualKeyToWChar(int virtualKey, PWCHAR outputChar, PWCHAR deadChar)
-	{
+	int convertVirtualKeyToWChar(int virtualKey, PWCHAR outputChar, PWCHAR deadChar) {
 		int i = 0;
 		short state = 0;
 		int shift = -1;
@@ -142,15 +136,13 @@ namespace Keyboard
 
 		int capsLock = (GetKeyState(VK_CAPITAL) & 0x1);
 
-		do
-		{
+		do {
 			state = GetAsyncKeyState(pCharModifiers->pVkToBit[i].Vk);
 
 			if(pCharModifiers->pVkToBit[i].Vk == VK_SHIFT)
 				shift = i + 1; // Get modification number for Shift key
 
-			if(state & ~SHRT_MAX)
-			{
+			if(state & ~SHRT_MAX) {
 				if(mod == 0)
 					mod = i + 1;
 				else
@@ -172,28 +164,23 @@ namespace Keyboard
 		SEARCH_VK_IN_CONVERSION_TABLE(9)
 		SEARCH_VK_IN_CONVERSION_TABLE(10)
 
-		if(*deadChar != 0) // I see dead characters...
-		{
+		if(*deadChar != 0) { // I see dead characters...
 			i = 0;
-			do
-			{
+			do {
 				baseChar = (WCHAR)pDeadKey[i].dwBoth;
 				diacritic = (WCHAR)(pDeadKey[i].dwBoth >> 16);
 
-				if((baseChar == *outputChar) && (diacritic == *deadChar))
-				{
+				if((baseChar == *outputChar) && (diacritic == *deadChar)) {
 					*deadChar = 0;
 					*outputChar = (WCHAR)pDeadKey[i].wchComposed;
 				}
 				i++;
-			}
-			while(pDeadKey[i].dwBoth != 0);
+			} while(pDeadKey[i].dwBoth != 0);
 		}
 		return charCount;
 	}
 
-	int getKeyboardLayoutFile(char* layoutFile, DWORD bufferSize)
-	{
+	int getKeyboardLayoutFile(char* layoutFile, DWORD bufferSize) {
 		HKEY hKey;
 		DWORD varType = REG_SZ;
 
@@ -204,10 +191,10 @@ namespace Keyboard
 		_snprintf(kbdKeyPath, 51 + KL_NAMELENGTH,"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\%s", kbdName);
 
 		if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, (LPCTSTR)kbdKeyPath, 0, KEY_QUERY_VALUE, &hKey) != ERROR_SUCCESS)
-		return -1;
+			return -1;
 
 		if(RegQueryValueEx(hKey, "Layout File", NULL, &varType, (LPBYTE)layoutFile, &bufferSize) != ERROR_SUCCESS)
-		return -1;
+			return -1;
 
 		RegCloseKey(hKey);
 

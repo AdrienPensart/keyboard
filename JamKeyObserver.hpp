@@ -4,15 +4,13 @@
 
 #include <vector>
 
-namespace Keyboard
-{
+namespace Keyboard {
 	typedef std::vector<int> KeyCombination;
-	class JamKeyObserver : public KeyObserver
-	{
+	class JamKeyObserver : public KeyObserver {
 		public:
 			JamKeyObserver(const KeyCombination& keyComb);
 			virtual void update(const KeyInformation& ki);
-			
+
 		private:
 			KeyCombination keyComb;
 	};
